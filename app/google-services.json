@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "123072539566",
+    "firebase_url": "https://earthquakerescue-dd410.firebaseio.com",
+    "project_id": "earthquakerescue-dd410",
+    "storage_bucket": "earthquakerescue-dd410.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123072539566:android:c635b279dbe6657b",
+        "android_client_info": {
+          "package_name": "com.vegaraju.anand.earthquakerescue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123072539566-ghe6bfr133pmviuhjl68f8ooljf51kqr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vegaraju.anand.earthquakerescue",
+            "certificate_hash": "f9505350dbff1394f44b3bc797a47b75f35f8f07"
+          }
+        },
+        {
+          "client_id": "123072539566-914jvuoqi4gbaeki19tlodqa7s0hbv9s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9VmRz25XBXYuvk3dvvjpYnIAUYFQpXNQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123072539566-914jvuoqi4gbaeki19tlodqa7s0hbv9s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
