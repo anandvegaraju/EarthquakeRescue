@@ -1,11 +1,17 @@
 package com.vegaraju.anand.earthquakerescue;
 
+import android.*;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,13 +25,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+
 /**
  * Created by Anand on 24-12-2017.
  */
 
 public class AddContacts extends AppCompatActivity {
 
-    private Button pickcontactsbutton, registerbutton;
+    private Button pickcontactsbutton, registerbutton, service_start;
     TextView textView;
     EditText nametext;
     String uname, ename, econtact, tmpph;
@@ -41,6 +49,7 @@ public class AddContacts extends AppCompatActivity {
         final String phoneNumber = user.getPhoneNumber();
         pickcontactsbutton = (Button) findViewById(R.id.button2);
         registerbutton = (Button) findViewById(R.id.register_button);
+        service_start = (Button) findViewById(R.id.servicebutton);
         textView = findViewById(R.id.emcontactname);
         nametext = findViewById(R.id.nameInput);
 
@@ -72,6 +81,45 @@ public class AddContacts extends AppCompatActivity {
                 }
         );
 
+        service_start.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ActivityCompat.requestPermissions(AddContacts.this,new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+
+                        Intent intent = new Intent(AddContacts.this, MyService.class);
+                        PendingIntent pintent = PendingIntent.getService(AddContacts.this, 0, intent, 0);
+                        AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                        alarm.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), 3000, pintent);
+                    }
+                }
+        );
+
+    }
+
+    public boolean checkLocationPermission()
+    {
+        String permission = "android.permission.ACCESS_FINE_LOCATION";
+        int res = this.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     @Override
