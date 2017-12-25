@@ -6,16 +6,22 @@ package com.vegaraju.anand.earthquakerescue;
 
 import android.*;
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -121,6 +127,19 @@ public class MyService extends Service
             Log.d(TAG, "gps provider does not exist " + ex.getMessage());
         }
 
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, 0);
+
+        Notification notification = new NotificationCompat.Builder(this, "default")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Earthquake rescue")
+                .setContentText("Carry on with your work.")
+                .setContentIntent(pendingIntent).build();
+
+        startForeground(1337, notification);
+
 
     }
 
@@ -140,12 +159,36 @@ public class MyService extends Service
                 }
             }
         }
-        startService(new Intent(this,MyService.class));
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, 0);
+
+        Notification notification = new NotificationCompat.Builder(this, "default")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Earthquake rescue")
+                .setContentText("Carry on with your work.")
+                .setContentIntent(pendingIntent).build();
+
+        startForeground(1337, notification);
     }
     private void initializeLocationManager() {
         Log.e(TAG, "initializeLocationManager");
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         }
+    }
+
+    public void initChannels(Context context) {
+        if (Build.VERSION.SDK_INT < 26) {
+            return;
+        }
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel channel = new NotificationChannel("default",
+                "Channel name",
+                NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setDescription("Channel description");
+        notificationManager.createNotificationChannel(channel);
     }
 }
