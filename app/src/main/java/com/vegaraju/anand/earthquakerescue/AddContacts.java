@@ -33,7 +33,7 @@ import java.util.Calendar;
 
 public class AddContacts extends AppCompatActivity {
 
-    private Button pickcontactsbutton, registerbutton, service_start;
+    private Button pickcontactsbutton, registerbutton, service_start, menu_button;
     TextView textView;
     EditText nametext;
     String uname, ename, econtact, tmpph;
@@ -43,13 +43,15 @@ public class AddContacts extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addcontacts);
+        this.setTitle("Settings");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
+        final FirebaseUser user = auth.getCurrentUser();
         final String phoneNumber = user.getPhoneNumber();
         pickcontactsbutton = (Button) findViewById(R.id.button2);
         registerbutton = (Button) findViewById(R.id.register_button);
         service_start = (Button) findViewById(R.id.servicebutton);
+        menu_button = (Button) findViewById(R.id.menubutton);
         textView = findViewById(R.id.emcontactname);
         nametext = findViewById(R.id.nameInput);
 
@@ -76,6 +78,7 @@ public class AddContacts extends AppCompatActivity {
                         userref.child("econtact").setValue(econtact);
                         userref.child("ename").setValue(ename);
                         userref.child("name").setValue(uname);
+
                         Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -91,6 +94,17 @@ public class AddContacts extends AppCompatActivity {
                         PendingIntent pintent = PendingIntent.getService(AddContacts.this, 0, intent, 0);
                         AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
                         alarm.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), 3000, pintent);
+                    }
+                }
+        );
+
+        menu_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent gotomenu = new Intent(AddContacts.this, Menu.class);
+                        startActivity(gotomenu);
+
                     }
                 }
         );
@@ -155,7 +169,7 @@ public class AddContacts extends AppCompatActivity {
             name = cursor.getString(nameIndex);
 
             // Set the value to the textviews
-            String tmp = "Name : " + name + "\nPhone : " + phoneNo;
+            String tmp = "Selected Emergency Contact details: \n\nName : " + name + "\nPhone : " + phoneNo;
             tmpph = phoneNo;
             ename = name;
             textView.setText(tmp);

@@ -91,14 +91,25 @@ public class MyService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         Log.e(TAG, "onStartCommand");
-        final long period = 3000;
+        final long period = 30000;
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 // do your task here
                 num.setValue(Calendar.getInstance().getTime());
+                //FirebaseAuth.getInstance().getCurrentUser().getIdToken(true);
+                //FirebaseDatabase.getInstance();
             }
         }, 1000, period);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // do your task here
+                //num.setValue(Calendar.getInstance().getTime());
+                FirebaseAuth.getInstance().getCurrentUser().getIdToken(true);
+                FirebaseDatabase.getInstance();
+            }
+        }, 1000, 900000);
         super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
@@ -137,6 +148,26 @@ public class MyService extends Service
                 .setContentTitle("Earthquake rescue")
                 .setContentText("Carry on with your work.")
                 .setContentIntent(pendingIntent).build();
+        final long period = 30000;
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // do your task here
+                num.setValue(Calendar.getInstance().getTime());
+                //FirebaseAuth.getInstance().getCurrentUser().getIdToken(true);
+                //FirebaseDatabase.getInstance().getReference();
+            }
+        }, 1000, period);
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // do your task here
+                //num.setValue(Calendar.getInstance().getTime());
+                FirebaseAuth.getInstance().getCurrentUser().getIdToken(true);
+                FirebaseDatabase.getInstance();
+            }
+        }, 1000, 900000);
 
         startForeground(1337, notification);
 
@@ -191,4 +222,6 @@ public class MyService extends Service
         channel.setDescription("Channel description");
         notificationManager.createNotificationChannel(channel);
     }
+
+
 }

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             // already signed in
-            startActivity(new Intent(MainActivity.this, AddContacts.class));
+            startActivity(new Intent(MainActivity.this, Menu.class));
             Toast.makeText(getApplicationContext(),"Signed in!",Toast.LENGTH_SHORT).show();
             finish();
         } else {

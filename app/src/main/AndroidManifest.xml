@@ -21,6 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddContacts"/>
+        <activity android:name=".Profile"/>
+        <activity android:name=".Menu"/>
         <service android:name=".MyService" android:enabled="true"/>
     </application>
 
