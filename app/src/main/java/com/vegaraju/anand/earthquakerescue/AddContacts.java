@@ -22,8 +22,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -36,9 +39,9 @@ public class AddContacts extends AppCompatActivity {
     private Button pickcontactsbutton, registerbutton, service_start, menu_button;
     TextView textView;
     EditText nametext;
-    String uname, ename, econtact, tmpph;
+    String uname, ename, econtact, tmpph, tmp;
     private static final int RESULT_PICK_CONTACT = 1;
-    DatabaseReference userref;
+    DatabaseReference userref, phonelistref;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +57,27 @@ public class AddContacts extends AppCompatActivity {
         menu_button = (Button) findViewById(R.id.menubutton);
         textView = findViewById(R.id.emcontactname);
         nametext = findViewById(R.id.nameInput);
+        phonelistref = database.getReference("reglist");
 
+        phonelistref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        tmp = dataSnapshot.getValue(String.class);
+                        if(!tmp.contains(user.getPhoneNumber())){
+                            tmp += " " + user.getPhoneNumber();
+                            phonelistref.setValue(tmp);
+                        }
+                        //tmp += " " + phonenumber;
+                        //eventref.setValue(tmp);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+        );
         // pick contact
 
         pickcontactsbutton.setOnClickListener(
@@ -78,6 +101,8 @@ public class AddContacts extends AppCompatActivity {
                         userref.child("econtact").setValue(econtact);
                         userref.child("ename").setValue(ename);
                         userref.child("name").setValue(uname);
+                        userref.child("safe").setValue(true);
+                        userref.child("sentsms").setValue(false);
 
                         Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
                     }
