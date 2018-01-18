@@ -28,7 +28,8 @@ public class Menu extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), "Coming soon", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Coming soon", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Menu.this, Home.class));
                     }
                 }
         );

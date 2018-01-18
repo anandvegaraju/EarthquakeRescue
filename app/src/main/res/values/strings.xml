@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EarthquakeRescue</string>
+    <string name="google_android_map_api_key">AIzaSyD_t6GnVSewHl-IfvtDJecQN0yt1JnjaJo</string>
 </resources>

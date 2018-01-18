@@ -23,7 +23,13 @@
         <activity android:name=".AddContacts"/>
         <activity android:name=".Profile"/>
         <activity android:name=".Menu"/>
+        <activity android:name=".Home"/>
+        <activity android:name=".MapView"/>
         <service android:name=".MyService" android:enabled="true"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD_t6GnVSewHl-IfvtDJecQN0yt1JnjaJo"/>
+
     </application>
 
 </manifest>
