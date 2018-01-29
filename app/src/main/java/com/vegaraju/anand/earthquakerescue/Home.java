@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class Home extends AppCompatActivity {
     ListView earthquake_list;
     FirebaseDatabase database;
-    DatabaseReference countref, eq, safeornot;
+    DatabaseReference countref, eq, safeornot, usereq;
     FirebaseAuth auth;
     FirebaseUser user;
     String phonenumber;
@@ -42,6 +42,7 @@ public class Home extends AppCompatActivity {
         earthquake_list = (ListView)findViewById(R.id.eqlistview);
         database = FirebaseDatabase.getInstance();
         countref = database.getReference("eqcount");
+
         eqalert = (TextView)findViewById(R.id.safe_text);
         imsafe = (Button)findViewById(R.id.safe_button);
 
@@ -50,6 +51,7 @@ public class Home extends AppCompatActivity {
         user = auth.getCurrentUser();
         phonenumber = user.getPhoneNumber();
         safeornot = database.getReference(phonenumber).child("safe");
+        usereq = database.getReference(phonenumber).child("eqid");
         final ArrayList<String> arrayStrings = new ArrayList<String>();
         final ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_1, arrayStrings);
@@ -170,6 +172,7 @@ public class Home extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        usereq.setValue("");
                         safeornot.setValue(true);
                         eqalert.setText("You are safe!");
                     }

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "123072539566-ej05tb7bl5oenga96hj2oh32kekutoeb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vegaraju.anand.earthquakerescue",
+            "certificate_hash": "47d1b36d07ff44a96703011cca9df8072313e74a"
+          }
+        },
+        {
           "client_id": "123072539566-ghe6bfr133pmviuhjl68f8ooljf51kqr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
